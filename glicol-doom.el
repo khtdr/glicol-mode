@@ -36,6 +36,13 @@
   (setq glicol-modeline-status status)
   (force-mode-line-update t))
 
+(defun glicol-modeline-click-handler (event)
+  "Handle clicks on the Glicol modeline icon."
+  (interactive "e")
+  (if (eq glicol-modeline-status 'running)
+      (glicol-stop-cli)
+    (glicol-start-cli)))
+
 (doom-modeline-def-segment glicol
   "Glicol server status indicator."
   (when (derived-mode-p 'glicol-mode)
@@ -44,10 +51,20 @@
      (pcase glicol-modeline-status
        ('running
         (propertize glicol-modeline-icon-running
-                    'help-echo "Glicol server running - click to stop"))
+                    'help-echo "Glicol server running - click to stop"
+                    'mouse-face 'mode-line-highlight
+                    'local-map (let ((map (make-sparse-keymap)))
+                                (define-key map [mode-line mouse-1]
+                                  #'glicol-modeline-click-handler)
+                                map)))
        ('stopped
         (propertize glicol-modeline-icon-stopped
-                    'help-echo "Glicol server stopped - click to start"))))))
+                    'help-echo "Glicol server stopped - click to start"
+                    'mouse-face 'mode-line-highlight
+                    'local-map (let ((map (make-sparse-keymap)))
+                                (define-key map [mode-line mouse-1]
+                                  #'glicol-modeline-click-handler)
+                                map)))))))
 
 (defun glicol-doom-setup-keys ()
   "Setup Glicol keybindings for Glicol major mode"
