@@ -19,6 +19,13 @@
   "Major mode for editing Glicol files."
   :group 'languages)
 
+(defcustom glicol-cli-command "glicol-cli"
+  "Command to run the Glicol CLI TUI.
+This should be the path to the glicol-cli executable.
+The default assumes it's available in your PATH as 'glicol-cli'."
+  :type 'string
+  :group 'glicol)
+
 (defvar glicol-mode-syntax-table
   (let ((table (make-syntax-table)))
     ;; Comments start with //
