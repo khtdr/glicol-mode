@@ -94,7 +94,8 @@
   (setq-local comment-start "// ")
   (setq-local comment-end "")
   (setq-local font-lock-defaults '(glicol-font-lock-keywords))
-  (add-to-list 'company-backends 'company-glicol))
+  (when (featurep 'company)
+    (add-to-list 'company-backends 'company-glicol)))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.glicol\\'" . glicol-mode))
@@ -111,8 +112,6 @@
 (define-key glicol-mode-map (kbd "C-c C-r") #'glicol-restart-cli)
 (define-key glicol-mode-map (kbd "C-c C-b") #'glicol-set-bpm)
 
-(when (featurep 'doom)
-  (require 'glicol-doom))
 
 (provide 'glicol-mode)
 ;;; glicol-mode.el ends here
