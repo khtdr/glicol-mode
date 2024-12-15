@@ -1,11 +1,16 @@
 ;;; glicol-mode.el --- Major mode for Glicol audio programming language -*- lexical-binding: t; -*-
-
-;; Copyright (C) 2024 Your Name
-;; Author: Your Name <your.email@example.com>
+;;
+;; Copyright (C) 2024 Jose Mazzarelli
+;;
+;; Author: Jose Mazzarelli <mazzarelli@gmail.com>
+;; Maintainer: Jose Mazzarelli <mazzarelli@gmail.com>
+;; Created: December 14, 2024
+;; Modified: December 14, 2024
+;;
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "26.1"))
 ;; Keywords: languages, multimedia
-;; URL: https://github.com/yourusername/glicol-mode
+;; URL: https://github.com/khtdr/glicol-mode
 
 ;;; Commentary:
 ;; Major mode for editing Glicol audio programming language files.
