@@ -3,7 +3,7 @@
 ;; Copyright (C) 2024 Your Name
 ;; Author: Your Name <your.email@example.com>
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "26.1"))
+;; Package-Requires: ((emacs "26.1") (vterm "0.0.1"))
 ;; Keywords: languages, multimedia
 ;; URL: https://github.com/yourusername/glicol-mode
 
@@ -14,6 +14,7 @@
 ;;; Code:
 
 (require 'subr-x)
+(require 'vterm)
 
 (defgroup glicol nil
   "Major mode for editing Glicol files."
@@ -33,31 +34,34 @@ The default assumes it's available in your PATH as 'glicol-cli'."
   "Name of the buffer where the Glicol CLI runs.")
 
 (defun glicol-start-cli ()
-  "Start the Glicol CLI in a dedicated buffer."
+  "Start the Glicol CLI in a dedicated vterm buffer."
   (interactive)
   (if glicol-cli-process
       (message "Glicol CLI is already running!")
-    (let ((buffer (get-buffer-create glicol-cli-buffer-name)))
-      (with-current-buffer buffer
-        (special-mode))  ; Make it read-only
-      (unless buffer-file-name
-        (error "Buffer is not visiting a file"))
-      (setq glicol-cli-process
-            (start-process "glicol-cli" buffer glicol-cli-command buffer-file-name))
-      (display-buffer buffer
-                     '((display-buffer-in-direction)
-                       (direction . below)
-                       (window-height . 0.5))))))
+    (unless buffer-file-name
+      (error "Buffer is not visiting a file"))
+    (let* ((vterm-buffer-name glicol-cli-buffer-name)
+           (buffer (vterm-other-window)))
+      (setq glicol-cli-process (get-buffer-process buffer))
+      (vterm-send-string (concat glicol-cli-command " " buffer-file-name))
+      (vterm-send-return)
+      (set-window-dedicated-p (selected-window) t)
+      ;; Set window height
+      (fit-window-to-buffer (selected-window) (floor (* (frame-height) 0.4))))))
 
 (defun glicol-stop-cli ()
   "Stop the running Glicol CLI instance and close its buffer."
   (interactive)
-  (when glicol-cli-process
-    (delete-process glicol-cli-process)
-    (setq glicol-cli-process nil)
-    (when-let ((buffer (get-buffer glicol-cli-buffer-name)))
-      (kill-buffer buffer))
-    (message "Glicol CLI stopped"))
+  (when-let ((buffer (get-buffer glicol-cli-buffer-name)))
+    (when (buffer-live-p buffer)
+      ;; Send Ctrl-C to stop the process
+      (with-current-buffer buffer
+        (vterm-send-C-c))
+      ;; Give it a moment to stop
+      (sleep-for 0.1)
+      (kill-buffer buffer)
+      (setq glicol-cli-process nil)
+      (message "Glicol CLI stopped")))
   (unless glicol-cli-process
     (message "No running Glicol CLI instance found")))
 
