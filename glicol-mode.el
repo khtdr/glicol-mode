@@ -58,9 +58,9 @@ The default assumes it's available in your PATH as 'glicol-cli'."
   (interactive)
   (when-let ((buffer (get-buffer glicol-cli-buffer-name)))
     (when (buffer-live-p buffer)
-      ;; Send Ctrl-C to stop the process
+      ;; Send 'q' to stop the process
       (with-current-buffer buffer
-        (vterm-send-C-c))
+        (vterm-send-string "q"))
       ;; Give it a moment to stop
       (sleep-for 0.1)
       (kill-buffer buffer)
