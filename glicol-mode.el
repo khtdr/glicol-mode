@@ -22,7 +22,12 @@
 (require 'glicol-docs)
 (require 'glicol-docs-ui)
 (require 'glicol-cli)
-(require 'glicol-company)
+
+(when (featurep 'doom)
+  (require 'glicol-doom))
+
+(when (featurep 'company)
+  (require 'company-glicol))
 
 ;;; Customization
 
