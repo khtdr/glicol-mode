@@ -123,13 +123,35 @@ The default assumes it's available in your PATH as 'glicol-cli'."
   `(
     ;; Comments
     (,"//.*$" . font-lock-comment-face)
+    
     ;; Node references (starting with ~)
     (,"~[[:alnum:]_]+" . font-lock-variable-name-face)
-    ;; Basic nodes
-    (,(regexp-opt '("sin" "saw" "squ" "tri" "noiz" "imp" "seq" "sp" "mul" "add" "mix" "lpf" "plate" "meta" "speed" "envperc" "choose" "arrange") 'words)
+    
+    ;; Oscillators and generators
+    (,(regexp-opt '("sin" "saw" "squ" "tri" "noiz" "imp") 'words)
+     . font-lock-function-name-face)
+    
+    ;; Signal processors
+    (,(regexp-opt '("mul" "add" "lpf" "hpf" "envperc" "delayms" "delayn" 
+                   "allpass" "apf" "apfgain" "apfmsgain" "onepole" "plate"
+                   "balance" "pan" "comb") 'words)
      . font-lock-builtin-face)
+    
+    ;; Sequencing and control
+    (,(regexp-opt '("seq" "speed" "choose" "arrange" "meta") 'words)
+     . font-lock-keyword-face)
+    
+    ;; Instruments and synths
+    (,(regexp-opt '("sp" "bd" "sn" "hh" "sawsynth" "squsynth" "trisynth") 'words)
+     . font-lock-type-face)
+    
+    ;; Mixing and routing
+    (,(regexp-opt '("mix" "mono_sum" "buf" "pha" "state") 'words)
+     . font-lock-preprocessor-face)
+    
     ;; Numbers
     (,"\\<-?[0-9]*\\.?[0-9]+\\>" . font-lock-constant-face)
+    
     ;; Node connection operator
     (">>" . font-lock-keyword-face))
   "Syntax highlighting for Glicol mode.")
