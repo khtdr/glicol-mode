@@ -34,7 +34,7 @@ The default assumes it's available in your PATH as 'glicol-cli'."
   "Name of the buffer where the Glicol CLI runs.")
 
 (defun glicol-start-cli ()
-  "Start the Glicol CLI in a dedicated vterm buffer."
+  "Start the Glicol CLI in headless mode."
   (interactive)
   (if glicol-cli-process
       (message "Glicol CLI is already running!")
@@ -42,16 +42,19 @@ The default assumes it's available in your PATH as 'glicol-cli'."
       (error "Buffer is not visiting a file"))
     (let* ((vterm-buffer-name glicol-cli-buffer-name)
            (glicol-file buffer-file-name)
-           (buffer (vterm-other-window)))
-      (setq glicol-cli-process (get-buffer-process buffer))
-      (vterm-send-string (concat glicol-cli-command " " glicol-file))
-      (vterm-send-return)
-      (set-window-dedicated-p (selected-window) t)
-      ;; Set window height
-      (window-resize (selected-window) 
-                    (- (floor (* (frame-height) 0.4))
-                       (window-height))
-                    nil))))
+           (buffer (generate-new-buffer glicol-cli-buffer-name)))
+      (setq glicol-cli-process 
+            (start-process "glicol-cli" buffer 
+                          glicol-cli-command "--headless" glicol-file))
+      (message "Started Glicol CLI in headless mode"))))
+
+(defun glicol-server-status ()
+  "Check if the Glicol server is running."
+  (interactive)
+  (if (and glicol-cli-process 
+           (process-live-p glicol-cli-process))
+      (message "Glicol server is running")
+    (message "Glicol server is not running")))
 
 (defun glicol-stop-cli ()
   "Stop the running Glicol CLI instance and close its buffer."
@@ -112,5 +115,6 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 ;; Key bindings for the Glicol mode map
 (define-key glicol-mode-map (kbd "C-c C-s") #'glicol-start-cli)
 (define-key glicol-mode-map (kbd "C-c C-q") #'glicol-stop-cli)
+(define-key glicol-mode-map (kbd "C-c C-c") #'glicol-server-status)
 
 ;;; glicol-mode.el ends here
