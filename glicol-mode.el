@@ -20,6 +20,7 @@
 
 (require 'subr-x)
 (require 'term)
+(require 'glicol-docs)
 
 (defgroup glicol nil
   "Major mode for editing Glicol files."
@@ -42,6 +43,46 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 
 (defvar glicol-cli-buffer-name "*Glicol CLI*"
   "Name of the buffer where the Glicol CLI runs.")
+
+(defvar glicol-doc-buffer-name "*Glicol Doc*"
+  "Name of the buffer for displaying Glicol documentation.")
+
+(defun glicol-describe-node-at-point ()
+  "Display documentation for the Glicol node at point."
+  (interactive)
+  (let* ((node (thing-at-point 'symbol))
+         (node-sym (when node (intern node)))
+         (doc (when node-sym (alist-get node-sym glicol-node-docs))))
+    (if doc
+        (with-help-window glicol-doc-buffer-name
+          (princ (format "Node: %s\n\n" node))
+          (princ (format "Description:\n%s\n\n" (alist-get 'description doc)))
+          (princ "Parameters:\n")
+          (dolist (param (alist-get 'parameters doc))
+            (princ (format "  %s: %s\n" (car param) (cdr param))))
+          (princ (format "\nInput:\n%s\n" (alist-get 'input doc)))
+          (princ (format "\nOutput:\n%s\n" (alist-get 'output doc)))
+          (princ (format "\nExample:\n%s\n" (alist-get 'example doc))))
+      (message "No documentation found for node at point"))))
+
+(defun glicol-describe-node (node)
+  "Display documentation for a Glicol NODE."
+  (interactive
+   (list (completing-read "Node: " 
+                         (mapcar #'symbol-name (mapcar #'car glicol-node-docs))
+                         nil t)))
+  (let ((node-sym (intern node)))
+    (if-let ((doc (alist-get node-sym glicol-node-docs)))
+        (with-help-window glicol-doc-buffer-name
+          (princ (format "Node: %s\n\n" node))
+          (princ (format "Description:\n%s\n\n" (alist-get 'description doc)))
+          (princ "Parameters:\n")
+          (dolist (param (alist-get 'parameters doc))
+            (princ (format "  %s: %s\n" (car param) (cdr param))))
+          (princ (format "\nInput:\n%s\n" (alist-get 'input doc)))
+          (princ (format "\nOutput:\n%s\n" (alist-get 'output doc)))
+          (princ (format "\nExample:\n%s\n" (alist-get 'example doc))))
+      (message "No documentation found for node '%s'" node))))
 
 (defun glicol-set-bpm (bpm)
   "Set Glicol BPM to BPM and restart the server if it's running."
@@ -170,6 +211,8 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 
 ;; Key bindings for the Glicol mode map
 (define-key glicol-mode-map (kbd "C-c C-s") #'glicol-start-cli)
+(define-key glicol-mode-map (kbd "C-c C-h") #'glicol-describe-node)
+(define-key glicol-mode-map (kbd "C-c C-d") #'glicol-describe-node-at-point)
 (define-key glicol-mode-map (kbd "C-c C-q") #'glicol-stop-cli)
 (define-key glicol-mode-map (kbd "C-c C-c") #'glicol-server-status)
 (define-key glicol-mode-map (kbd "C-c C-r") #'glicol-restart-cli)
