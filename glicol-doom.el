@@ -22,8 +22,11 @@
 (require 'nerd-icons)
 (require 'doom-modeline)
 
-(defvar glicol-modeline-icon
-  (nerd-icons-mdicon "nf-md-music_note"))
+(defvar glicol-modeline-icon-running
+  (nerd-icons-mdicon "nf-md-stop"))
+
+(defvar glicol-modeline-icon-stopped
+  (nerd-icons-mdicon "nf-md-play"))
 
 (defvar glicol-modeline-status 'stopped
   "Current status of Glicol server: 'running or 'stopped.")
@@ -40,13 +43,11 @@
      " "
      (pcase glicol-modeline-status
        ('running
-        (propertize glicol-modeline-icon
-                    'face '(:foreground "green")
-                    'help-echo "Glicol server running"))
+        (propertize glicol-modeline-icon-running
+                    'help-echo "Glicol server running - click to stop"))
        ('stopped
-        (propertize glicol-modeline-icon
-                    'face '(:foreground "red")
-                    'help-echo "Glicol server stopped"))))))
+        (propertize glicol-modeline-icon-stopped
+                    'help-echo "Glicol server stopped - click to start"))))))
 
 (defun glicol-doom-setup-keys ()
   "Setup Glicol keybindings for Glicol major mode"
