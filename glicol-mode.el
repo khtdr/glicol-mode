@@ -30,7 +30,7 @@
 (defun glicol--load-documentation ()
   "Load documentation from glicol.json into the hash table."
   (let* ((json-file (expand-file-name "glicol.json"
-                                     (file-name-directory (locate-library "glicol-mode"))))
+                                     (file-name-directory (or load-file-name buffer-file-name))))
          (json-object-type 'hash-table)
          (json-array-type 'list)
          (json-key-type 'string)
