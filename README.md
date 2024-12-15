@@ -31,6 +31,13 @@ Add to your `init.el`:
 (require 'glicol-mode)
 ```
 
+### With straight.el
+
+```elisp
+(straight-use-package
+  '(glicol-mode :type git :host github :repo "khtdr/glicol-mode"))
+```
+
 ### With use-package
 
 ```elisp
@@ -39,7 +46,7 @@ Add to your `init.el`:
   :mode "\\.glicol\\'")
 ```
 
-### Doom Emacs
+### Doom Emacs Users
 
 Add to your `packages.el`:
 
@@ -58,6 +65,8 @@ Files with the `.glicol` extension will automatically open in Glicol mode.
 - `C-c C-q` - Stop the Glicol server
 - `C-c C-c` - Check server status
 - `C-c C-r` - Restart the server
+
+For Doom Emacs users, the modeline will show the Glicol server status with clickable buttons to start/stop the server.
 
 ### Customization
 
