@@ -44,10 +44,10 @@ The default assumes it's available in your PATH as 'glicol-cli'."
       (setq glicol-cli-process
             (get-buffer-process
              (term-ansi-make-term glicol-cli-buffer-name
-                                 glicol-cli-command
-                                 nil
-                                 "--headless"
-                                 glicol-file)))
+                                  glicol-cli-command
+                                  nil
+                                  "--headless"
+                                  glicol-file)))
       (message "Started Glicol CLI in headless mode"))))
 
 (defun glicol-server-status ()
@@ -127,5 +127,10 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 (define-key glicol-mode-map (kbd "C-c C-q") #'glicol-stop-cli)
 (define-key glicol-mode-map (kbd "C-c C-c") #'glicol-server-status)
 (define-key glicol-mode-map (kbd "C-c C-r") #'glicol-restart-cli)
+
+
+
+(when (featurep 'doom)
+  (require 'glicol-doom))
 
 ;;; glicol-mode.el ends here
