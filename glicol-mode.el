@@ -124,8 +124,6 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.glicol\\'" . glicol-mode))
 
-(provide 'glicol-mode)
-
 ;; Key bindings for the Glicol mode map
 (define-key glicol-mode-map (kbd "C-c C-s") #'glicol-start-cli)
 (define-key glicol-mode-map (kbd "C-c C-q") #'glicol-stop-cli)
@@ -133,8 +131,8 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 (define-key glicol-mode-map (kbd "C-c C-r") #'glicol-restart-cli)
 
 
-
 (when (featurep 'doom)
   (require 'glicol-doom))
 
+(provide 'glicol-mode)
 ;;; glicol-mode.el ends here

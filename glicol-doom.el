@@ -63,11 +63,10 @@
   ;; Setup keybindings
   (map! :leader
         (:prefix ("G" . "Glicol")
-                 :desc "Start Glicol CLI" "s" #'glicol-start-cli
-                 :desc "Stop Glicol CLI" "q" #'glicol-stop-cli
-                 :desc "Restart Glicol CLI" "r" #'glicol-restart-cli
-                 :desc "Check server status" "c" #'glicol-server-status)))
-
+         :desc "Start Glicol CLI" "s" #'glicol-start-cli
+         :desc "Stop Glicol CLI" "q" #'glicol-stop-cli
+         :desc "Restart Glicol CLI" "r" #'glicol-restart-cli
+         :desc "Check server status" "c" #'glicol-server-status)))
 
 
 ;; Add the setup function to appropriate hooks
