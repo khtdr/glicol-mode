@@ -8,7 +8,7 @@
 ;; Modified: December 14, 2024
 ;;
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "26.1"))
+;; Package-Requires: ((emacs "26.1") (company "0.9.13"))
 ;; Keywords: languages, multimedia
 ;; URL: https://github.com/khtdr/glicol-mode
 
@@ -20,6 +20,57 @@
 
 (require 'subr-x)
 (require 'term)
+(require 'json)
+(require 'company)
+
+;; Documentation support
+(defvar glicol--node-documentation (make-hash-table :test 'equal)
+  "Hash table storing documentation for Glicol nodes.")
+
+(defun glicol--load-documentation ()
+  "Load documentation from glicol.json into the hash table."
+  (let* ((json-file (expand-file-name "glicol.json"
+                                     (file-name-directory (locate-library "glicol-mode"))))
+         (json-object-type 'hash-table)
+         (json-array-type 'list)
+         (json-key-type 'string)
+         (data (json-read-file json-file)))
+    (maphash (lambda (node info)
+              (let ((doc (concat (gethash "description" info "")
+                               "\n\nParameters: "
+                               (format "%S" (gethash "parameters" info '()))
+                               "\n\nExample:\n"
+                               (gethash "example" info ""))))
+                (puthash node doc glicol--node-documentation)))
+            data)))
+
+(defun glicol-company-backend (command &optional arg &rest ignored)
+  "Company backend for Glicol completion."
+  (interactive (list 'interactive))
+  (cl-case command
+    (interactive (company-begin-backend 'glicol-company-backend))
+    (prefix (and (eq major-mode 'glicol-mode)
+                (company-grab-symbol)))
+    (candidates
+     (all-completions arg (hash-table-keys glicol--node-documentation)))
+    (annotation (format " (%s)" "node"))
+    (meta (gethash arg glicol--node-documentation))))
+
+(defun glicol-eldoc-function ()
+  "Return documentation for the Glicol node at point."
+  (when-let* ((symbol (thing-at-point 'symbol t))
+              (doc (gethash symbol glicol--node-documentation)))
+    (let ((first-line (car (split-string doc "\n"))))
+      (substring first-line 0 (min (length first-line) 80)))))
+
+(defun glicol-describe-node (node)
+  "Display documentation for Glicol NODE in a help buffer."
+  (interactive
+   (list (completing-read "Describe Glicol node: "
+                         (hash-table-keys glicol--node-documentation))))
+  (when-let ((doc (gethash node glicol--node-documentation)))
+    (with-help-window (help-buffer)
+      (princ (format "Documentation for Glicol node `%s':\n\n%s" node doc)))))
 
 (defgroup glicol nil
   "Major mode for editing Glicol files."
@@ -163,7 +214,22 @@ The default assumes it's available in your PATH as 'glicol-cli'."
   :syntax-table glicol-mode-syntax-table
   (setq-local comment-start "// ")
   (setq-local comment-end "")
-  (setq-local font-lock-defaults '(glicol-font-lock-keywords)))
+  (setq-local font-lock-defaults '(glicol-font-lock-keywords))
+  
+  ;; Add documentation support
+  (glicol--load-documentation)
+  
+  ;; ElDoc support
+  (add-function :before-until (local 'eldoc-documentation-function)
+                #'glicol-eldoc-function)
+  
+  ;; Company completion
+  (when (fboundp 'company-mode)
+    (add-to-list (make-local-variable 'company-backends)
+                 'glicol-company-backend))
+  
+  ;; Enable company-mode
+  (company-mode 1))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.glicol\\'" . glicol-mode))
@@ -174,6 +240,7 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 (define-key glicol-mode-map (kbd "C-c C-c") #'glicol-server-status)
 (define-key glicol-mode-map (kbd "C-c C-r") #'glicol-restart-cli)
 (define-key glicol-mode-map (kbd "C-c C-b") #'glicol-set-bpm)
+(define-key glicol-mode-map (kbd "C-c C-d") #'glicol-describe-node)
 
 (when (featurep 'doom)
   (require 'glicol-doom))
