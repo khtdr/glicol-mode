@@ -69,6 +69,7 @@ Files with the `.glicol` extension will automatically open in Glicol mode.
 - `C-c C-q` - Quit the Glicol server
 - `C-c C-c` - Check server status
 - `C-c C-r` - Restart the server
+- `C-c C-b` - Set BPM (beats per minute)
 
 For Doom Emacs users, the modeline will show the Glicol server status with clickable buttons to start/stop the server.
 
@@ -77,7 +78,11 @@ For Doom Emacs users, the modeline will show the Glicol server status with click
 You can customize the path to the glicol-cli executable:
 
 ```elisp
+;; Set the path to glicol-cli:
 (setq glicol-cli-command "/path/to/glicol-cli")
+
+;; Set the default BPM (beats per minute):
+(setq glicol-bpm 120)
 ```
 
 ## Contributing
