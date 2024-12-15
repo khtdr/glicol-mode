@@ -21,31 +21,27 @@
 (require 'nerd-icons)
 (require 'doom-modeline)
 
-(defvar glicol-modeline-icon-running
+(defvar glicol-doom-modeline-icon-running
   (nerd-icons-mdicon "nf-md-stop"))
 
-(defvar glicol-modeline-music-note1
+(defvar glicol-doom-modeline-music-note
   (nerd-icons-mdicon "nf-md-music_note"))
 
-(defface glicol-modeline-note-fade1
-  '((t :inherit doom-modeline-info :foreground unspecified :background unspecified :alpha 0.8))
-  "Face for music note with reduced opacity.")
-
-(defvar glicol-modeline-icon-stopped
+(defvar glicol-doom-modeline-icon-stopped
   (nerd-icons-mdicon "nf-md-play"))
 
-(defvar glicol-modeline-status 'stopped
+(defvar glicol-doom-modeline-status 'stopped
   "Current status of Glicol server: 'running or 'stopped.")
 
-(defun glicol-modeline-status-update (status)
-  "Update the Glicol modeline status indicator."
-  (setq glicol-modeline-status status)
+(defun glicol-doom-modeline-status-update (status)
+  "Update the Glicol modeline STATUS indicator."
+  (setq glicol-doom-modeline-status status)
   (force-mode-line-update t))
 
-(defun glicol-modeline-click-handler (event)
-  "Handle clicks on the Glicol modeline icon."
+(defun glicol-doom-modeline-click-handler (event)
+  "Handle click EVENT on the Glicol modeline icon."
   (interactive "e")
-  (if (eq glicol-modeline-status 'running)
+  (if (eq glicol-doom-modeline-status 'running)
       (glicol-stop-cli)
     (glicol-start-cli)))
 
@@ -54,38 +50,38 @@
   (when (derived-mode-p 'glicol-mode)
     (concat
      " "
-     (pcase glicol-modeline-status
+     (pcase glicol-doom-modeline-status
        ('running
         (concat
-         (propertize glicol-modeline-icon-running
+         (propertize glicol-doom-modeline-icon-running
                      'help-echo "Glicol is playing - click to stop"
                      'mouse-face 'mode-line-highlight
                      'local-map (let ((map (make-sparse-keymap)))
                                   (define-key map [mode-line mouse-1]
-                                              #'glicol-modeline-click-handler)
+                                              #'glicol-doom-modeline-click-handler)
                                   map))
          " "
-         (propertize glicol-modeline-music-note1
-                     'face 'glicol-modeline-note-fade1)))
+         (propertize glicol-doom-modeline-music-note)))
        ('stopped
-        (propertize glicol-modeline-icon-stopped
+        (propertize glicol-doom-modeline-icon-stopped
                     'help-echo "Glicol is stopped - click to play"
                     'mouse-face 'mode-line-highlight
                     'local-map (let ((map (make-sparse-keymap)))
                                  (define-key map [mode-line mouse-1]
-                                             #'glicol-modeline-click-handler)
+                                             #'glicol-doom-modeline-click-handler)
                                  map)))))))
 
-(defun glicol-doom-setup-keys ()
-  "Setup Glicol keybindings for Glicol major mode"
+(defun glicol-doom-setup ()
+  "Setup Doom integration for Glicol major mode."
+
   ;; Add modeline segment
-  (doom-modeline-def-modeline 'glicol-modeline
+  (doom-modeline-def-modeline 'glicol-doom-modeline
     '(bar workspace-name window-number modals matches buffer-info remote-host glicol)
     '(misc-info minor-modes input-method buffer-position process major-mode))
   
   ;; Set the modeline
   (when (derived-mode-p 'glicol-mode)
-    (doom-modeline-set-modeline 'glicol-modeline 'default))
+    (doom-modeline-set-modeline 'glicol-doom-modeline 'default))
   
   ;; Setup keybindings
   (map! :leader
@@ -98,9 +94,9 @@
 
 
 ;; Add the setup function to appropriate hooks
-(add-hook 'find-file-hook #'glicol-doom-setup-keys)
-(add-hook 'dired-mode-hook #'glicol-doom-setup-keys)
-(add-hook 'after-change-major-mode-hook #'glicol-doom-setup-keys)
+(add-hook 'find-file-hook #'glicol-doom-setup)
+(add-hook 'dired-mode-hook #'glicol-doom-setup)
+(add-hook 'after-change-major-mode-hook #'glicol-doom-setup)
 
 (provide 'glicol-doom)
 ;;; glicol-doom.el ends here
