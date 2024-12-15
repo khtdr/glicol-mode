@@ -41,13 +41,17 @@ The default assumes it's available in your PATH as 'glicol-cli'."
     (unless buffer-file-name
       (error "Buffer is not visiting a file"))
     (let* ((vterm-buffer-name glicol-cli-buffer-name)
+           (glicol-file buffer-file-name)
            (buffer (vterm-other-window)))
       (setq glicol-cli-process (get-buffer-process buffer))
-      (vterm-send-string (concat glicol-cli-command " " buffer-file-name))
+      (vterm-send-string (concat glicol-cli-command " " glicol-file))
       (vterm-send-return)
       (set-window-dedicated-p (selected-window) t)
       ;; Set window height
-      (fit-window-to-buffer (selected-window) (floor (* (frame-height) 0.4))))))
+      (window-resize (selected-window) 
+                    (- (floor (* (frame-height) 0.4))
+                       (window-height))
+                    nil))))
 
 (defun glicol-stop-cli ()
   "Stop the running Glicol CLI instance and close its buffer."
