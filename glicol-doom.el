@@ -23,8 +23,10 @@
   "Setup Glicol keybindings for Glicol major mode"
   (map! :leader
         (:prefix ("G" . "Glicol")
-
-                 )))
+                 :desc "Start Glicol CLI" "s" #'glicol-start-cli
+                 :desc "Stop Glicol CLI" "q" #'glicol-stop-cli
+                 :desc "Restart Glicol CLI" "r" #'glicol-restart-cli
+                 :desc "Check server status" "c" #'glicol-server-status)))
 
 
 
