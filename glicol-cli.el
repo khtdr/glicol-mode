@@ -34,6 +34,14 @@ The default assumes it's available in your PATH as 'glicol-cli'."
     (glicol-restart-cli))
   (message "Glicol BPM set to %d" bpm))
 
+(defun glicol-setup-cli-window ()
+  "Configure the CLI window display."
+  (let ((cli-window (get-buffer-window glicol-cli-buffer-name)))
+    (when cli-window
+      (select-window cli-window)
+      (set-window-dedicated-p cli-window t)
+      (fit-window-to-buffer cli-window 3))))
+
 (defun glicol-start-cli ()
   "Start the Glicol CLI in headless mode."
   (interactive)
@@ -51,6 +59,12 @@ The default assumes it's available in your PATH as 'glicol-cli'."
                                   "--bpm"
                                   (number-to-string glicol-bpm)
                                   glicol-file)))
+      ;; Configure the terminal window
+      (display-buffer glicol-cli-buffer-name
+                     '((display-buffer-at-bottom)
+                       (window-height . 3)
+                       (dedicated . t)))
+      (glicol-setup-cli-window)
       (when (featurep 'doom)
         (glicol-doom-modeline-status-update 'running))
       (message "Started Glicol CLI in headless mode"))))
