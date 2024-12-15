@@ -24,6 +24,20 @@
 (defvar glicol-modeline-icon-running
   (nerd-icons-mdicon "nf-md-stop"))
 
+(defvar glicol-modeline-music-note1
+  (nerd-icons-mdicon "nf-md-music_note"))
+
+(defvar glicol-modeline-music-note2
+  (nerd-icons-mdicon "nf-md-music_note"))
+
+(defface glicol-modeline-note-fade1
+  '((t :inherit doom-modeline-info :foreground unspecified :background unspecified :alpha 0.7))
+  "Face for first music note with reduced opacity.")
+
+(defface glicol-modeline-note-fade2
+  '((t :inherit doom-modeline-info :foreground unspecified :background unspecified :alpha 0.4))
+  "Face for second music note with more reduced opacity.")
+
 (defvar glicol-modeline-icon-stopped
   (nerd-icons-mdicon "nf-md-play"))
 
@@ -49,13 +63,19 @@
      " "
      (pcase glicol-modeline-status
        ('running
-        (propertize glicol-modeline-icon-running
-                    'help-echo "Glicol server running - click to stop"
-                    'mouse-face 'mode-line-highlight
-                    'local-map (let ((map (make-sparse-keymap)))
+        (concat
+         (propertize glicol-modeline-icon-running
+                     'help-echo "Glicol server running - click to stop"
+                     'mouse-face 'mode-line-highlight
+                     'local-map (let ((map (make-sparse-keymap)))
                                  (define-key map [mode-line mouse-1]
-                                             #'glicol-modeline-click-handler)
-                                 map)))
+                                           #'glicol-modeline-click-handler)
+                                 map))
+         " "
+         (propertize glicol-modeline-music-note1
+                     'face 'glicol-modeline-note-fade1)
+         (propertize glicol-modeline-music-note2
+                     'face 'glicol-modeline-note-fade2)))
        ('stopped
         (propertize glicol-modeline-icon-stopped
                     'help-echo "Glicol server stopped - click to start"
