@@ -82,7 +82,8 @@
          :desc "Start Glicol" "s" #'glicol-start-cli
          :desc "Quit Glicol" "q" #'glicol-stop-cli
          :desc "Restart Glicol" "r" #'glicol-restart-cli
-         :desc "Check Glicol status" "c" #'glicol-server-status)))
+         :desc "Check Glicol status" "c" #'glicol-server-status
+         :desc "Set BPM" "b" #'glicol-set-bpm)))
 
 
 ;; Add the setup function to appropriate hooks
