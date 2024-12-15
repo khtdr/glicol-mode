@@ -43,6 +43,15 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 (defvar glicol-cli-buffer-name "*Glicol CLI*"
   "Name of the buffer where the Glicol CLI runs.")
 
+(defun glicol-set-bpm (bpm)
+  "Set Glicol BPM to BPM and restart the server if it's running."
+  (interactive "nBPM: ")
+  (setq glicol-bpm bpm)
+  (when (and glicol-cli-process
+             (process-live-p glicol-cli-process))
+    (glicol-restart-cli))
+  (message "Glicol BPM set to %d" bpm))
+
 (defun glicol-start-cli ()
   "Start the Glicol CLI in headless mode."
   (interactive)
@@ -125,6 +134,7 @@ The default assumes it's available in your PATH as 'glicol-cli'."
     (">>" . font-lock-keyword-face))
   "Syntax highlighting for Glicol mode.")
 
+
 ;;;###autoload
 (define-derived-mode glicol-mode prog-mode "Glicol"
   "Major mode for editing Glicol files."
@@ -141,18 +151,7 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 (define-key glicol-mode-map (kbd "C-c C-q") #'glicol-stop-cli)
 (define-key glicol-mode-map (kbd "C-c C-c") #'glicol-server-status)
 (define-key glicol-mode-map (kbd "C-c C-r") #'glicol-restart-cli)
-
-(defun glicol-set-bpm (bpm)
-  "Set Glicol BPM to BPM and restart the server if it's running."
-  (interactive "nBPM: ")
-  (setq glicol-bpm bpm)
-  (when (and glicol-cli-process
-             (process-live-p glicol-cli-process))
-    (glicol-restart-cli))
-  (message "Glicol BPM set to %d" bpm))
-
 (define-key glicol-mode-map (kbd "C-c C-b") #'glicol-set-bpm)
-
 
 (when (featurep 'doom)
   (require 'glicol-doom))
