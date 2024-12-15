@@ -33,9 +33,37 @@
 (defvar glicol-doom-modeline-status 'stopped
   "Current status of Glicol server: 'running or 'stopped.")
 
+(defvar glicol-doom-modeline-note-visible t
+  "Whether the music note is currently visible in the modeline.")
+
+(defvar glicol-doom-modeline-timer nil
+  "Timer for blinking the music note.")
+
+(defun glicol-doom-modeline-toggle-note ()
+  "Toggle the visibility of the music note."
+  (setq glicol-doom-modeline-note-visible (not glicol-doom-modeline-note-visible))
+  (force-mode-line-update t))
+
+(defun glicol-doom-modeline-start-animation ()
+  "Start the music note blinking animation."
+  (when (not glicol-doom-modeline-timer)
+    (setq glicol-doom-modeline-timer
+          (run-with-timer 0 1 #'glicol-doom-modeline-toggle-note))))
+
+(defun glicol-doom-modeline-stop-animation ()
+  "Stop the music note blinking animation."
+  (when glicol-doom-modeline-timer
+    (cancel-timer glicol-doom-modeline-timer)
+    (setq glicol-doom-modeline-timer nil
+          glicol-doom-modeline-note-visible t))
+  (force-mode-line-update t))
+
 (defun glicol-doom-modeline-status-update (status)
   "Update the Glicol modeline STATUS indicator."
   (setq glicol-doom-modeline-status status)
+  (if (eq status 'running)
+      (glicol-doom-modeline-start-animation)
+    (glicol-doom-modeline-stop-animation))
   (force-mode-line-update t))
 
 (defun glicol-doom-modeline-click-handler (event)
@@ -61,7 +89,8 @@
                                               #'glicol-doom-modeline-click-handler)
                                   map))
          " "
-         (propertize glicol-doom-modeline-music-note)))
+         (when glicol-doom-modeline-note-visible
+           (propertize glicol-doom-modeline-music-note))))
        ('stopped
         (propertize glicol-doom-modeline-icon-stopped
                     'help-echo "Glicol is stopped - click to play"
