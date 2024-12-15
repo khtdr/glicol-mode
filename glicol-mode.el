@@ -78,11 +78,11 @@ The default assumes it's available in your PATH as 'glicol-cli'."
   (interactive)
   (when-let ((buffer (get-buffer glicol-cli-buffer-name)))
     (when (buffer-live-p buffer)
-      ;; Send 'q' to stop the process
-      (with-current-buffer buffer
-        (term-send-string (get-buffer-process buffer) "q"))
-      ;; Give it a moment to stop
-      (sleep-for 0.1)
+      (let ((proc (get-buffer-process buffer)))
+        (when (process-live-p proc)
+          ;; Kill the process first
+          (set-process-query-on-exit-flag proc nil)
+          (delete-process proc)))
       (kill-buffer buffer)
       (setq glicol-cli-process nil)
       (when (featurep 'doom)
