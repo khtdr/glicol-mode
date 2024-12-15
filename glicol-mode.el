@@ -40,8 +40,10 @@ The default assumes it's available in your PATH as 'glicol-cli'."
     (let ((buffer (get-buffer-create glicol-cli-buffer-name)))
       (with-current-buffer buffer
         (special-mode))  ; Make it read-only
+      (unless buffer-file-name
+        (error "Buffer is not visiting a file"))
       (setq glicol-cli-process
-            (start-process "glicol-cli" buffer glicol-cli-command))
+            (start-process "glicol-cli" buffer glicol-cli-command buffer-file-name))
       (display-buffer buffer
                      '((display-buffer-in-direction)
                        (direction . below)
