@@ -22,7 +22,7 @@
 (require 'glicol-docs)
 (require 'glicol-docs-ui)
 (require 'glicol-cli)
-(require 'company-glicol)
+(require 'glicol-company)
 
 ;;; Customization
 
@@ -61,8 +61,8 @@
     
     ;; Signal processors
     (,(regexp-opt '("mul" "add" "lpf" "hpf" "envperc" "delayms" "delayn" 
-                   "allpass" "apf" "apfgain" "apfmsgain" "onepole" "plate"
-                   "balance" "pan" "comb") 'words)
+                    "allpass" "apf" "apfgain" "apfmsgain" "onepole" "plate"
+                    "balance" "pan" "comb") 'words)
      . font-lock-builtin-face)
     
     ;; Sequencing and control
