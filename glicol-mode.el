@@ -48,6 +48,8 @@ The default assumes it's available in your PATH as 'glicol-cli'."
                                   nil
                                   "--headless"
                                   glicol-file)))
+      (when (featurep 'doom)
+        (glicol-modeline-status-update 'running))
       (message "Started Glicol CLI in headless mode"))))
 
 (defun glicol-server-status ()
@@ -78,6 +80,8 @@ The default assumes it's available in your PATH as 'glicol-cli'."
       (sleep-for 0.1)
       (kill-buffer buffer)
       (setq glicol-cli-process nil)
+      (when (featurep 'doom)
+        (glicol-modeline-status-update 'stopped))
       (message "Glicol CLI stopped")))
   (unless glicol-cli-process
     (message "No running Glicol CLI instance found")))
