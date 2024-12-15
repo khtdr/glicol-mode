@@ -14,6 +14,8 @@ An Emacs major mode for the [Glicol](https://glicol.org) audio programming langu
 
 ![Screenshot](./screenshot.png "Emacs screenshot")
 
+![Screenshot](./completion.png "Company completion")
+
 ![Screenshot](./modeline.png "Doom integration")
 
 ## Installation
