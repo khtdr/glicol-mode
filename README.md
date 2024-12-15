@@ -11,12 +11,15 @@ An Emacs major mode for the [Glicol](https://glicol.org) audio programming langu
 - Doom Emacs integration
 - Real-time documentation lookup
 - Intelligent context-aware suggestions
+- Dedicated Glicol-CLI buffer shows status while running
 
 ![Screenshot](./screenshot.png "Emacs screenshot")
 
 ![Screenshot](./completion.png "Company completion")
 
 ![Screenshot](./modeline.png "Doom integration")
+
+![Screenshot](./errors.png "Error display")
 
 ## Installation
 
