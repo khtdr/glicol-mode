@@ -32,6 +32,11 @@ The default assumes it's available in your PATH as 'glicol-cli'."
   :type 'string
   :group 'glicol)
 
+(defcustom glicol-bpm 120
+  "Current BPM (beats per minute) for Glicol playback."
+  :type 'integer
+  :group 'glicol)
+
 (defvar glicol-cli-process nil
   "Process handle for the running Glicol CLI instance.")
 
@@ -52,6 +57,8 @@ The default assumes it's available in your PATH as 'glicol-cli'."
                                   glicol-cli-command
                                   nil
                                   "--headless"
+                                  "--bpm"
+                                  (number-to-string glicol-bpm)
                                   glicol-file)))
       (when (featurep 'doom)
         (glicol-modeline-status-update 'running))
@@ -134,6 +141,17 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 (define-key glicol-mode-map (kbd "C-c C-q") #'glicol-stop-cli)
 (define-key glicol-mode-map (kbd "C-c C-c") #'glicol-server-status)
 (define-key glicol-mode-map (kbd "C-c C-r") #'glicol-restart-cli)
+
+(defun glicol-set-bpm (bpm)
+  "Set Glicol BPM to BPM and restart the server if it's running."
+  (interactive "nBPM: ")
+  (setq glicol-bpm bpm)
+  (when (and glicol-cli-process
+             (process-live-p glicol-cli-process))
+    (glicol-restart-cli))
+  (message "Glicol BPM set to %d" bpm))
+
+(define-key glicol-mode-map (kbd "C-c C-b") #'glicol-set-bpm)
 
 
 (when (featurep 'doom)
