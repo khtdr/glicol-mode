@@ -1,0 +1,27 @@
+// a graph is formed by connecting different nodes.
+
+// if you are not familiar with the concept, just think of it as connecting modular synth.
+
+// all you need to know is how each node(module) sounds or reacts to some inputs.
+
+// in this example, we start with the basic sound making unit: oscillators
+
+o1: sin 440
+// this is called hello world for digital synthesis
+// need to give it a name
+// some options are: track1, t_1, t_a, track_a
+
+// try to:
+// [1] change the frequency parameter of this node
+// [2] change "sin" to 3 other basic waveforms:
+// "saw", "squ", "tri"
+// [3] try to find more info in browser console!
+//          Chrome/Edge           Firefox
+// windows| ctrl + shift + j    | ctrl + shift + i
+// mac os | command + option + j| command + option + i
+// [4] move your cursor on the keyword `sin`
+// press alt+d (windows) or option-d (mac).
+// [5] when you make an error/typo, it will be displayed in the console
+// the music will not stop though. why should it?
+// [6] use ctrl + / to uncomment the line below to try some errors
+// t2: sin

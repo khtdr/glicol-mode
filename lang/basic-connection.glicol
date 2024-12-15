@@ -1,0 +1,19 @@
+
+// in digital music, you are basically hearing a series of numbers between -1.0 to 1.0.
+
+// the oscillator nodes such as "sin" outputs such a range of number streams.
+
+// in this example, the "mul" node is used to control amplitude here.
+
+// two nodes can be connected with >>
+
+
+// Listen to this sine tone
+t1: sin 440 >> mul 0.3
+
+// Then ucomment the line below to play another sine tone that is 1 Hz higher
+//t2: sin 441 >> mul 0.3
+
+// The phenomenon you hear is called "beats", and the beat frequency is the difference
+// between the two frequencies.
+// Try to change from 441 to 442 or 440.5. What do you hear?

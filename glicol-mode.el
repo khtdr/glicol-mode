@@ -46,29 +46,13 @@
     (">>" . font-lock-keyword-face))
   "Syntax highlighting for Glicol mode.")
 
-(defun glicol-find-definition ()
-  "Jump to the definition of the node reference at point."
-  (interactive)
-  (let* ((symbol (thing-at-point 'symbol))
-         (ref (when (and symbol (string-prefix-p "~" symbol))
-                symbol)))
-    (when ref
-      (save-excursion
-        (goto-char (point-min))
-        (if (re-search-forward (concat "^" (regexp-quote ref) ":\\s-*") nil t)
-            (goto-char (match-beginning 0))
-          (message "Definition not found for %s" ref))))))
-
 ;;;###autoload
 (define-derived-mode glicol-mode prog-mode "Glicol"
   "Major mode for editing Glicol files."
   :syntax-table glicol-mode-syntax-table
   (setq-local comment-start "// ")
   (setq-local comment-end "")
-  (setq-local font-lock-defaults '(glicol-font-lock-keywords))
-  
-  ;; Key bindings
-  (define-key glicol-mode-map (kbd "M-.") #'glicol-find-definition))
+  (setq-local font-lock-defaults '(glicol-font-lock-keywords)))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.glicol\\'" . glicol-mode))

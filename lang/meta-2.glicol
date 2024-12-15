@@ -1,0 +1,34 @@
+// since the script is handling each sample manually, optimization is needed
+
+// be cautious to create new variable using `let` from rhai. use existed 'a'-'z' instead
+
+// never create an array because this action is too heavy to happen in each block
+
+// also note that `meta` is a WIP and highly experimental; stay tuned
+
+
+// a sawtooth osc chained with a onepole filter
+// the first meta is to write a saw manually
+out: meta `
+	f = 220.;
+	output.pad(128, 0.0);
+	for i in 0..128 {
+		output[i] = p * 2.0-1.0;
+		p += f / sr;
+		if p > 1.0 { p -= 1.0 };
+	};
+	output
+` >> meta `
+    r = 1./10000.;
+    output.pad(128, 0.0);
+    b = (-2.0 * PI() * r).exp();
+    a = 1.0 - b;
+    for i in 0..128 {
+        y = input[i] * a + b * z;
+        output[i] = y;
+        z = y;
+    };
+    output
+`
+// if the script has an input, you can use the "input" variable
+// the "input" is a 128-size array in web audio

@@ -1,0 +1,19 @@
+// some advanced topics from here
+
+// if you are familiar with js, you can use some js tricks to generate glicol code.
+
+// you can try this example with ctrl-enter first
+
+// and run it again with shift-enter
+
+
+##
+// generate 10 random sine wave oscillators
+var s = ""
+for (let i=0; i<10; i++) {
+    s += `track${i}: sin ${Math.random()*1000+200}
+    >> mul ${Math.random()/100};\n`
+}
+console.log(s)
+return s
+#
