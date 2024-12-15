@@ -5,9 +5,12 @@ An Emacs major mode for the [Glicol](https://glicol.org) audio programming langu
 ## Features
 
 - Syntax highlighting for Glicol code
+- Smart code completion with documentation
 - Integration with glicol-cli
 - Built-in commands for controlling the Glicol server
 - Doom Emacs integration
+- Real-time documentation lookup
+- Intelligent context-aware suggestions
 
 ![Screenshot](./screenshot.png "Emacs screenshot")
 
