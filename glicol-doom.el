@@ -31,11 +31,11 @@
   (nerd-icons-mdicon "nf-md-music_note"))
 
 (defface glicol-modeline-note-fade1
-  '((t :inherit doom-modeline-info :foreground unspecified :background unspecified :alpha 0.7))
+  '((t :inherit doom-modeline-info :foreground unspecified :background unspecified :alpha 0.8))
   "Face for first music note with reduced opacity.")
 
 (defface glicol-modeline-note-fade2
-  '((t :inherit doom-modeline-info :foreground unspecified :background unspecified :alpha 0.4))
+  '((t :inherit doom-modeline-info :foreground unspecified :background unspecified :alpha 0.2))
   "Face for second music note with more reduced opacity.")
 
 (defvar glicol-modeline-icon-stopped
@@ -68,9 +68,9 @@
                      'help-echo "Glicol server running - click to stop"
                      'mouse-face 'mode-line-highlight
                      'local-map (let ((map (make-sparse-keymap)))
-                                 (define-key map [mode-line mouse-1]
-                                           #'glicol-modeline-click-handler)
-                                 map))
+                                  (define-key map [mode-line mouse-1]
+                                              #'glicol-modeline-click-handler)
+                                  map))
          " "
          (propertize glicol-modeline-music-note1
                      'face 'glicol-modeline-note-fade1)
