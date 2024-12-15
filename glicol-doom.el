@@ -33,7 +33,7 @@
 (defvar glicol-doom-modeline-status 'stopped
   "Current status of Glicol server: 'running or 'stopped.")
 
-(defvar glicol-doom-modeline-note-visible t
+(defvar glicol-doom-modeline-note-visible nil
   "Whether the music note is currently visible in the modeline.")
 
 (defvar glicol-doom-modeline-timer nil
