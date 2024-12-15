@@ -107,7 +107,7 @@
 
 ;;; Key Bindings
 ;; Documentation commands
-(define-key glicol-mode-map (kbd "C-c C-h") #'glicol-describe-node)
+(define-key glicol-mode-map (kbd "C-c C-n") #'glicol-describe-node)
 (define-key glicol-mode-map (kbd "C-c C-d") #'glicol-describe-node-at-point)
 
 ;; CLI commands

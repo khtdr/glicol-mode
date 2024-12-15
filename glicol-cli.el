@@ -58,7 +58,7 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 (defun glicol-server-status ()
   "Check if the Glicol server is running."
   (interactive)
-  (if (and glicol-cli-process 
+  (if (and glicol-cli-process
            (process-live-p glicol-cli-process))
       (message "Glicol server is running")
     (message "Glicol server is not running")))

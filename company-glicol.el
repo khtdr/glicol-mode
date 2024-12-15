@@ -28,8 +28,8 @@
      (format "%s\n\nParameters:\n%s\n\nInput: %s\nOutput: %s\n\nExample:\n%s"
              (alist-get 'description doc)
              (mapconcat (lambda (param)
-                         (format "  %s: %s" (car param) (cdr param)))
-                       (alist-get 'parameters doc) "\n")
+                          (format "  %s: %s" (car param) (cdr param)))
+                        (alist-get 'parameters doc) "\n")
              (alist-get 'input doc)
              (alist-get 'output doc)
              (alist-get 'example doc)))))
@@ -43,11 +43,11 @@ ARG is the optional command argument."
   (cl-case command
     (interactive (company-begin-backend 'company-glicol))
     (prefix (and (eq major-mode 'glicol-mode)
-                (company-grab-symbol)))
+                 (company-grab-symbol)))
     (candidates (company-glicol--candidates arg))
     (annotation (company-glicol--annotation arg))
     (doc-buffer (company-glicol--doc-buffer arg))
     (sorted t)))
 
 (provide 'company-glicol)
-;;; glicol-company.el ends here
+;;; company-glicol.el ends here
