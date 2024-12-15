@@ -56,6 +56,14 @@ The default assumes it's available in your PATH as 'glicol-cli'."
       (message "Glicol server is running")
     (message "Glicol server is not running")))
 
+(defun glicol-restart-cli ()
+  "Restart the Glicol CLI server."
+  (interactive)
+  (glicol-stop-cli)
+  ;; Give it a moment to fully stop
+  (sleep-for 0.2)
+  (glicol-start-cli))
+
 (defun glicol-stop-cli ()
   "Stop the running Glicol CLI instance and close its buffer."
   (interactive)
@@ -116,5 +124,6 @@ The default assumes it's available in your PATH as 'glicol-cli'."
 (define-key glicol-mode-map (kbd "C-c C-s") #'glicol-start-cli)
 (define-key glicol-mode-map (kbd "C-c C-q") #'glicol-stop-cli)
 (define-key glicol-mode-map (kbd "C-c C-c") #'glicol-server-status)
+(define-key glicol-mode-map (kbd "C-c C-r") #'glicol-restart-cli)
 
 ;;; glicol-mode.el ends here
