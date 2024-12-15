@@ -111,8 +111,8 @@
 (define-key glicol-mode-map (kbd "C-c C-d") #'glicol-describe-node-at-point)
 
 ;; CLI commands
-(define-key glicol-mode-map (kbd "C-c C-s") #'glicol-start-cli)
-(define-key glicol-mode-map (kbd "C-c C-q") #'glicol-stop-cli)
+(define-key glicol-mode-map (kbd "C-c C-p") #'glicol-start-cli)
+(define-key glicol-mode-map (kbd "C-c C-s") #'glicol-stop-cli)
 (define-key glicol-mode-map (kbd "C-c C-c") #'glicol-server-status)
 (define-key glicol-mode-map (kbd "C-c C-r") #'glicol-restart-cli)
 (define-key glicol-mode-map (kbd "C-c C-b") #'glicol-set-bpm)

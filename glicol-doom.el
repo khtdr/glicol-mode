@@ -58,7 +58,7 @@
        ('running
         (concat
          (propertize glicol-modeline-icon-running
-                     'help-echo "Glicol server running - click to stop"
+                     'help-echo "Glicol is playing - click to stop"
                      'mouse-face 'mode-line-highlight
                      'local-map (let ((map (make-sparse-keymap)))
                                   (define-key map [mode-line mouse-1]
@@ -69,7 +69,7 @@
                      'face 'glicol-modeline-note-fade1)))
        ('stopped
         (propertize glicol-modeline-icon-stopped
-                    'help-echo "Glicol server stopped - click to start"
+                    'help-echo "Glicol is stopped - click to play"
                     'mouse-face 'mode-line-highlight
                     'local-map (let ((map (make-sparse-keymap)))
                                  (define-key map [mode-line mouse-1]
@@ -90,8 +90,8 @@
   ;; Setup keybindings
   (map! :leader
         (:prefix ("G" . "Glicol")
-         :desc "Start Glicol" "s" #'glicol-start-cli
-         :desc "Quit Glicol" "q" #'glicol-stop-cli
+         :desc "Play Glicol" "p" #'glicol-start-cli
+         :desc "Stop Glicol" "s" #'glicol-stop-cli
          :desc "Restart Glicol" "r" #'glicol-restart-cli
          :desc "Check Glicol status" "c" #'glicol-server-status
          :desc "Set BPM" "b" #'glicol-set-bpm)))
