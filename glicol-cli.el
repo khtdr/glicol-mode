@@ -63,8 +63,11 @@ The default assumes it's available in your PATH as 'glicol-cli'."
       (display-buffer glicol-cli-buffer-name
                      '((display-buffer-at-bottom)
                        (window-height . 3)
-                       (dedicated . t)))
+                       (dedicated . t)
+                       (inhibit-switch-frame . t)))
       (glicol-setup-cli-window)
+      ;; Return focus to the original window
+      (select-window (get-buffer-window (current-buffer)))
       (when (featurep 'doom)
         (glicol-doom-modeline-status-update 'running))
       (message "Started Glicol CLI in headless mode"))))

@@ -45,10 +45,11 @@
   (force-mode-line-update t))
 
 (defun glicol-doom-modeline-start-animation ()
-  "Start the music note blinking animation."
+  "Start the music note blinking animation based on current BPM."
   (when (not glicol-doom-modeline-timer)
-    (setq glicol-doom-modeline-timer
-          (run-with-timer 0 1 #'glicol-doom-modeline-toggle-note))))
+    (let ((interval (/ 60.0 glicol-bpm)))  ; Convert BPM to seconds
+      (setq glicol-doom-modeline-timer
+            (run-with-timer 0 interval #'glicol-doom-modeline-toggle-note)))))
 
 (defun glicol-doom-modeline-stop-animation ()
   "Stop the music note blinking animation."
