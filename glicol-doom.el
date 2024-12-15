@@ -27,16 +27,9 @@
 (defvar glicol-modeline-music-note1
   (nerd-icons-mdicon "nf-md-music_note"))
 
-(defvar glicol-modeline-music-note2
-  (nerd-icons-mdicon "nf-md-music_note"))
-
 (defface glicol-modeline-note-fade1
   '((t :inherit doom-modeline-info :foreground unspecified :background unspecified :alpha 0.8))
-  "Face for first music note with reduced opacity.")
-
-(defface glicol-modeline-note-fade2
-  '((t :inherit doom-modeline-info :foreground unspecified :background unspecified :alpha 0.2))
-  "Face for second music note with more reduced opacity.")
+  "Face for music note with reduced opacity.")
 
 (defvar glicol-modeline-icon-stopped
   (nerd-icons-mdicon "nf-md-play"))
@@ -73,9 +66,7 @@
                                   map))
          " "
          (propertize glicol-modeline-music-note1
-                     'face 'glicol-modeline-note-fade1)
-         (propertize glicol-modeline-music-note2
-                     'face 'glicol-modeline-note-fade2)))
+                     'face 'glicol-modeline-note-fade1)))
        ('stopped
         (propertize glicol-modeline-icon-stopped
                     'help-echo "Glicol server stopped - click to start"
