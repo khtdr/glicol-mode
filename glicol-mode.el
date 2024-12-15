@@ -22,6 +22,7 @@
 (require 'glicol-docs)
 (require 'glicol-docs-ui)
 (require 'glicol-cli)
+(require 'company-glicol)
 
 ;;; Customization
 
@@ -92,7 +93,8 @@
   :syntax-table glicol-mode-syntax-table
   (setq-local comment-start "// ")
   (setq-local comment-end "")
-  (setq-local font-lock-defaults '(glicol-font-lock-keywords)))
+  (setq-local font-lock-defaults '(glicol-font-lock-keywords))
+  (add-to-list 'company-backends 'company-glicol))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.glicol\\'" . glicol-mode))
