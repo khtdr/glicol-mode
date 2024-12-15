@@ -7,8 +7,7 @@
 ;; Created: December 14, 2024
 ;; Modified: December 14, 2024
 ;; Version: 0.0.1
-;; Keywords: abbrev bib c calendar comm convenience data docs emulations extensions faces files frames games hardware help hypermedia i18n internal languages lisp local maint mail matching mouse multimedia news outlines processes terminals tex text tools unix vc
-;; Homepage: https://github.com/joey/glicol-doom
+;; Homepage: https://github.com/khtdr/glicol-doom
 ;; Package-Requires: ((emacs "24.3") (nerd-icons "0.0.1") (doom-modeline "3.0.0"))
 ;;
 ;; This file is not part of GNU Emacs.
@@ -54,17 +53,17 @@
                     'help-echo "Glicol server running - click to stop"
                     'mouse-face 'mode-line-highlight
                     'local-map (let ((map (make-sparse-keymap)))
-                                (define-key map [mode-line mouse-1]
-                                  #'glicol-modeline-click-handler)
-                                map)))
+                                 (define-key map [mode-line mouse-1]
+                                             #'glicol-modeline-click-handler)
+                                 map)))
        ('stopped
         (propertize glicol-modeline-icon-stopped
                     'help-echo "Glicol server stopped - click to start"
                     'mouse-face 'mode-line-highlight
                     'local-map (let ((map (make-sparse-keymap)))
-                                (define-key map [mode-line mouse-1]
-                                  #'glicol-modeline-click-handler)
-                                map)))))))
+                                 (define-key map [mode-line mouse-1]
+                                             #'glicol-modeline-click-handler)
+                                 map)))))))
 
 (defun glicol-doom-setup-keys ()
   "Setup Glicol keybindings for Glicol major mode"
@@ -80,10 +79,10 @@
   ;; Setup keybindings
   (map! :leader
         (:prefix ("G" . "Glicol")
-         :desc "Start Glicol CLI" "s" #'glicol-start-cli
-         :desc "Stop Glicol CLI" "q" #'glicol-stop-cli
-         :desc "Restart Glicol CLI" "r" #'glicol-restart-cli
-         :desc "Check server status" "c" #'glicol-server-status)))
+         :desc "Start Glicol" "s" #'glicol-start-cli
+         :desc "Quit Glicol" "q" #'glicol-stop-cli
+         :desc "Restart Glicol" "r" #'glicol-restart-cli
+         :desc "Check Glicol status" "c" #'glicol-server-status)))
 
 
 ;; Add the setup function to appropriate hooks

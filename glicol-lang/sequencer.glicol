@@ -8,7 +8,7 @@
 
 out: speed 4.0 >> seq 60 >> bd 0.1
 
-bass: seq 33_33_ _33 33__33 _33 >> sawsynth 0.01 0.3
+bass: seq 33_33_ _33 33__33 _~a >> sawsynth 0.01 0.3
 
 // the "seq" node output a value based on 1.0
 // 60 is the base midi, then "seq" outputs 1.0
@@ -17,7 +17,7 @@ bass: seq 33_33_ _33 33__33 _33 >> sawsynth 0.01 0.3
 
 // change one or more 33 to ~a
 // then uncomment the line below
-// ~a: choose 42 42 42 42 42 37 0 0 0 0
+~a: choose 42 42 42 42 42 37 0 0 0 0
 
 // repetation of a number will alter the probability
 

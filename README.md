@@ -9,6 +9,10 @@ An Emacs major mode for the [Glicol](https://glicol.org) audio programming langu
 - Built-in commands for controlling the Glicol server
 - Doom Emacs integration
 
+![Screenshot](./screenshot.png "Emacs screenshot")
+
+![Screenshot](./modeline.png "Doom integration")
+
 ## Installation
 
 ### Prerequisites
@@ -62,7 +66,7 @@ Files with the `.glicol` extension will automatically open in Glicol mode.
 ### Key Bindings
 
 - `C-c C-s` - Start the Glicol server
-- `C-c C-q` - Stop the Glicol server
+- `C-c C-q` - Quit the Glicol server
 - `C-c C-c` - Check server status
 - `C-c C-r` - Restart the server
 
