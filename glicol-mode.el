@@ -3,7 +3,7 @@
 ;; Copyright (C) 2024 Your Name
 ;; Author: Your Name <your.email@example.com>
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "26.1") (vterm "0.0.1"))
+;; Package-Requires: ((emacs "26.1"))
 ;; Keywords: languages, multimedia
 ;; URL: https://github.com/yourusername/glicol-mode
 
@@ -14,7 +14,7 @@
 ;;; Code:
 
 (require 'subr-x)
-(require 'vterm)
+(require 'term)
 
 (defgroup glicol nil
   "Major mode for editing Glicol files."
@@ -40,12 +40,14 @@ The default assumes it's available in your PATH as 'glicol-cli'."
       (message "Glicol CLI is already running!")
     (unless buffer-file-name
       (error "Buffer is not visiting a file"))
-    (let* ((vterm-buffer-name glicol-cli-buffer-name)
-           (glicol-file buffer-file-name)
-           (buffer (generate-new-buffer glicol-cli-buffer-name)))
-      (setq glicol-cli-process 
-            (start-process "glicol-cli" buffer 
-                          glicol-cli-command "--headless" glicol-file))
+    (let* ((glicol-file buffer-file-name))
+      (setq glicol-cli-process
+            (get-buffer-process
+             (term-ansi-make-term glicol-cli-buffer-name
+                                 glicol-cli-command
+                                 nil
+                                 "--headless"
+                                 glicol-file)))
       (message "Started Glicol CLI in headless mode"))))
 
 (defun glicol-server-status ()
@@ -71,7 +73,7 @@ The default assumes it's available in your PATH as 'glicol-cli'."
     (when (buffer-live-p buffer)
       ;; Send 'q' to stop the process
       (with-current-buffer buffer
-        (vterm-send-string "q"))
+        (term-send-string (get-buffer-process buffer) "q"))
       ;; Give it a moment to stop
       (sleep-for 0.1)
       (kill-buffer buffer)
