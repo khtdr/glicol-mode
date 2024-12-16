@@ -119,10 +119,10 @@
   ;; Setup keybindings
   (map! :leader
         (:prefix ("G" . "Glicol")
-         :desc "Play Glicol" "p" #'glicol-start-cli
-         :desc "Stop Glicol" "s" #'glicol-stop-cli
-         :desc "Restart Glicol" "r" #'glicol-restart-cli
-         :desc "Check Glicol status" "c" #'glicol-server-status
+         :desc "Play Glicol" "g" #'glicol-start-cli
+         :desc "Stop Glicol" "x" #'glicol-stop-cli
+         :desc "Restart Glicol" "t" #'glicol-restart-cli
+         :desc "Check Glicol status" "s" #'glicol-server-status
          :desc "Set BPM" "b" #'glicol-set-bpm)))
 
 

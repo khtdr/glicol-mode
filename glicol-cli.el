@@ -49,7 +49,8 @@ The default assumes it's available in your PATH as 'glicol-cli'."
       (message "Glicol CLI is already running!")
     (unless buffer-file-name
       (error "Buffer is not visiting a file"))
-    (let* ((glicol-file buffer-file-name))
+    (let* ((glicol-file buffer-file-name)
+           (glicol-file-buffer (current-buffer)))
       (setq glicol-cli-process
             (get-buffer-process
              (term-ansi-make-term glicol-cli-buffer-name
@@ -67,7 +68,7 @@ The default assumes it's available in your PATH as 'glicol-cli'."
                         (inhibit-switch-frame . t)))
       (glicol-setup-cli-window)
       ;; Return focus to the original window
-      ;; (select-window (get-buffer-window (current-buffer)))
+      (select-window (get-buffer-window glicol-file-buffer))
       (when (featurep 'doom)
         (glicol-doom-modeline-status-update 'running))
       (message "Started Glicol CLI in headless mode"))))
