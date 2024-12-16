@@ -78,10 +78,10 @@
   "Glicol server status indicator."
   (when (derived-mode-p 'glicol-mode)
     (concat
-     " "
      (pcase glicol-doom-modeline-status
        ('running
         (concat
+         " "
          (propertize glicol-doom-modeline-icon-running
                      'help-echo "Glicol is playing - click to stop"
                      'mouse-face 'mode-line-highlight
@@ -89,10 +89,7 @@
                                   (define-key map [mode-line mouse-1]
                                               #'glicol-doom-modeline-click-handler)
                                   map))
-         " "
-         " " (number-to-string glicol-bpm) " BPM "
-         (when glicol-doom-modeline-note-visible
-           (propertize glicol-doom-modeline-music-note)))))
+         ))
        ('stopped
         (propertize glicol-doom-modeline-icon-stopped
                     'help-echo "Glicol is stopped - click to play"
@@ -100,7 +97,10 @@
                     'local-map (let ((map (make-sparse-keymap)))
                                  (define-key map [mode-line mouse-1]
                                              #'glicol-doom-modeline-click-handler)
-                                 map)))))))
+                                 map))))
+     " " (number-to-string glicol-bpm) " BPM "
+     (when glicol-doom-modeline-note-visible
+       (propertize glicol-doom-modeline-music-note)))))
 
 (defun glicol-doom-setup ()
   "Setup Doom integration for Glicol major mode."
