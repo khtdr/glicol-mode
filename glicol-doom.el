@@ -90,10 +90,9 @@
                                               #'glicol-doom-modeline-click-handler)
                                   map))
          " "
+         " " (number-to-string glicol-bpm) " BPM "
          (when glicol-doom-modeline-note-visible
-           (concat
-            " " glicol-bpm " "
-            (propertize glicol-doom-modeline-music-note)))))
+           (propertize glicol-doom-modeline-music-note)))))
        ('stopped
         (propertize glicol-doom-modeline-icon-stopped
                     'help-echo "Glicol is stopped - click to play"
