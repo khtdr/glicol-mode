@@ -88,8 +88,7 @@
                      'local-map (let ((map (make-sparse-keymap)))
                                   (define-key map [mode-line mouse-1]
                                               #'glicol-doom-modeline-click-handler)
-                                  map))
-         ))
+                                  map))))
        ('stopped
         (propertize glicol-doom-modeline-icon-stopped
                     'help-echo "Glicol is stopped - click to play"
@@ -99,8 +98,11 @@
                                              #'glicol-doom-modeline-click-handler)
                                  map))))
      " " (number-to-string glicol-bpm) " BPM "
-     (when glicol-doom-modeline-note-visible
-       (propertize glicol-doom-modeline-music-note)))))
+     (pcase glicol-doom-modeline-status
+       ('running
+        (when glicol-doom-modeline-note-visible
+          (propertize glicol-doom-modeline-music-note)))))))
+
 
 (defun glicol-doom-setup ()
   "Setup Doom integration for Glicol major mode."
