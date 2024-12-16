@@ -78,10 +78,10 @@
   "Glicol server status indicator."
   (when (derived-mode-p 'glicol-mode)
     (concat
+     " "
      (pcase glicol-doom-modeline-status
        ('running
         (concat
-         " "
          (propertize glicol-doom-modeline-icon-running
                      'help-echo "Glicol is playing - click to stop"
                      'mouse-face 'mode-line-highlight
