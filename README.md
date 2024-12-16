@@ -29,6 +29,14 @@ An Emacs major mode for the [Glicol](https://glicol.org) audio programming langu
 
 - Emacs 26.1 or later
 - [glicol-cli](https://github.com/glicol/glicol-cli) installed and available in your PATH
+- Sample audio files from the [Glicol repository](https://github.com/chaosprint/glicol/tree/main/js/assets)
+
+After downloading the samples, you need to set the `GLICOL_CLI_SAMPLES_PATH` environment variable to point to your samples directory:
+
+```bash
+# Add to your shell configuration file (.bashrc, .zshrc, config.fish, etc):
+export GLICOL_CLI_SAMPLES_PATH="/path/to/your/samples"
+```
 
 ### Manual Installation
 
