@@ -91,7 +91,9 @@
                                   map))
          " "
          (when glicol-doom-modeline-note-visible
-           (propertize glicol-doom-modeline-music-note))))
+           (concat
+            " " glicol-bpm " "
+            (propertize glicol-doom-modeline-music-note)))))
        ('stopped
         (propertize glicol-doom-modeline-icon-stopped
                     'help-echo "Glicol is stopped - click to play"
