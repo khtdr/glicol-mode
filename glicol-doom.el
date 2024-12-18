@@ -1,25 +1,14 @@
 ;;; glicol-doom.el --- Description -*- lexical-binding: t; -*-
 ;;
-;; Copyright (C) 2024 Jose Mazzarelli
-;;
-;; Author: Jose Mazzarelli <mazzarelli@gmail.com>
-;; Maintainer: Jose Mazzarelli <mazzarelli@gmail.com>
-;; Created: December 14, 2024
-;; Modified: December 14, 2024
-;; Version: 0.0.1
-;; Homepage: https://github.com/khtdr/glicol-doom
-;; Package-Requires: ((emacs "24.3") (nerd-icons "0.0.1") (doom-modeline "3.0.0"))
-;;
-;; This file is not part of GNU Emacs.
-;;
 ;;; Commentary:
-;;
-;;  Description
+;; Provides Doom integration for glicol-mode
 ;;
 ;;; Code:
 
 (require 'nerd-icons)
 (require 'doom-modeline)
+
+(defvar glicol-bpm)
 
 (defvar glicol-doom-modeline-icon-running
   (nerd-icons-mdicon "nf-md-stop"))
@@ -31,7 +20,7 @@
   (nerd-icons-mdicon "nf-md-play"))
 
 (defvar glicol-doom-modeline-status 'stopped
-  "Current status of Glicol server: 'running or 'stopped.")
+  "Current status of Glicol server: `running or `stopped.")
 
 (defvar glicol-doom-modeline-note-visible nil
   "Whether the music note is currently visible in the modeline.")

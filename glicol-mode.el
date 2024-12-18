@@ -65,7 +65,7 @@
      . font-lock-function-name-face)
     
     ;; Signal processors
-    (,(regexp-opt '("mul" "add" "lpf" "hpf" "envperc" "delayms" "delayn" 
+    (,(regexp-opt '("mul" "add" "lpf" "hpf" "envperc" "delayms" "delayn"
                     "allpass" "apf" "apfgain" "apfmsgain" "onepole" "plate"
                     "balance" "pan" "comb") 'words)
      . font-lock-builtin-face)

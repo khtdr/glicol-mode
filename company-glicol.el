@@ -25,7 +25,7 @@
   (when-let* ((node-sym (intern candidate))
               (doc (alist-get node-sym glicol-node-docs)))
     (company-doc-buffer
-     (format "%s\n\nParameters:\n%s\n\nInput: %s\nOutput: %s\n\nExample:\n%s"
+     (format "%s\n\n=Parameters:=\n%s\n\n=Input:= %s\n=Output:= %s\n\n=Example:=\n%s"
              (alist-get 'description doc)
              (mapconcat (lambda (param)
                           (format "  %s: %s" (car param) (cdr param)))

@@ -31,9 +31,9 @@
 (defun glicol-describe-node (node)
   "Display documentation for a Glicol NODE."
   (interactive
-   (list (completing-read "Node: " 
-                         (mapcar #'symbol-name (mapcar #'car glicol-node-docs))
-                         nil t)))
+   (list (completing-read "Node: "
+                          (mapcar #'symbol-name (mapcar #'car glicol-node-docs))
+                          nil t)))
   (let ((node-sym (intern node)))
     (if-let ((doc (alist-get node-sym glicol-node-docs)))
         (with-help-window glicol-doc-buffer-name

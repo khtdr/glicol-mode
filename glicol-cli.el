@@ -10,7 +10,7 @@
 (defcustom glicol-cli-command "glicol-cli"
   "Command to run the Glicol CLI TUI.
 This should be the path to the glicol-cli executable.
-The default assumes it's available in your PATH as 'glicol-cli'."
+The default assumes it's available in your PATH as =glicol-cli=."
   :type 'string
   :group 'glicol)
 
