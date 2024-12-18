@@ -7,7 +7,7 @@
 ;; Created: December 14, 2024
 ;; Modified: December 14, 2024
 ;;
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Package-Requires: ((emacs "26.1"))
 ;; Keywords: languages, multimedia
 ;; URL: https://github.com/khtdr/glicol-mode
